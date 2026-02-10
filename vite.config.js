@@ -5,4 +5,8 @@ import tailwindcss from "@tailwindcss/vite";
 export default defineConfig({
   base: "/iqms-app/",
   plugins: [react(), tailwindcss()],
+  build: {
+    outDir: "docs",
+    emptyOutDir: true,
+  },
 });
