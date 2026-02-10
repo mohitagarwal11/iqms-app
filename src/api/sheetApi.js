@@ -1,4 +1,4 @@
-import { defaultSheet } from "../src/defaultSheet";
+import { defaultSheet } from "../data/defaultSheet";
 
 const STORAGE_KEY = "iqms-sheet-v1";
 

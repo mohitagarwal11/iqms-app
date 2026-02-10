@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { getSheet, saveSheet } from "../api/sheetApi";
-import { createId } from "../utility/id";
+import { createId } from "../utils/id";
 
 export const useSheetStore = create((set, get) => ({
   sheet: { topics: [] },

@@ -1,4 +1,4 @@
-# Codolio - Question Manager
+# IQMS - Question Manager
 
 A simple React app for tracking coding questions and organizing them by topics. Built using React, Zustand for state management, and localStorage for data persistence.
 
