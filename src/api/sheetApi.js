@@ -1,12 +1,16 @@
-import { defaultSheet } from "../data/defaultSheet";
+import { transformSheetJsonToAppFormat } from "../utils/transformSheet";
+import sheetJsonData from "../data/sheet.json";
 
 const STORAGE_KEY = "iqms-sheet-v1";
 
 // to add a small delay to simulate network request
 const wait = (ms = 150) => new Promise((resolve) => setTimeout(resolve, ms));
 
+// Transform sheet.json into the app's internal format on first load
+const initialSheet = transformSheetJsonToAppFormat(sheetJsonData);
+
 // get sheet from localStorage
-// returns default sheet if nothing saved yet
+// returns transformed sheet.json data if nothing saved yet
 export async function getSheet() {
   await wait();
 
@@ -16,8 +20,9 @@ export async function getSheet() {
     return JSON.parse(saved);
   }
 
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(defaultSheet));
-  return defaultSheet;
+  console.log("loaded initial sheet from sheet.json");
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(initialSheet));
+  return initialSheet;
 }
 
 // save sheet to localStorage
