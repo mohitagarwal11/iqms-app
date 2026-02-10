@@ -1,40 +1,103 @@
-# IQMS - Question Manager
+# IQMS App
 
-A simple React app for tracking coding questions and organizing them by topics. Built using React, Zustand for state management, and localStorage for data persistence.
+IQMS is a React app to organize coding practice questions by topic and sub-topic, track completion, and monitor progress.
 
 ## Features
 
-- Create and organize topics with sub-topics
-- Add coding questions with difficulty levels and links
-- Mark questions as complete
-- Data persists in browser localStorage
-
-## Setup
-
-```bash
-npm install
-npm run dev
-```
-
-Visit `http://localhost:5173`
-
-## Project Structure
-
-- `/src` - React components and main app logic
-- `/sheets` - Zustand store for managing sheet data
-- `/api` - localStorage API functions
-- `/utility` - Helper functions (like ID generation)
+- Topic and sub-topic management
+  - Add, rename, and delete topics
+  - Add, rename, and delete sub-topics
+- Question management
+  - Add a question from a URL (auto-generates question title from link)
+  - Edit question name, difficulty, and link
+  - Delete questions
+  - Mark questions as done/undone
+- Progress tracking
+  - Sub-topic, topic, and overall completion counters
+  - Topic progress bars
+- Persistence
+  - Sheet data is saved to `localStorage`
+  - Theme preference (light/dark) is saved to `localStorage`
+- UI
+  - Light and dark theme toggle
+  - Collapsible topic and sub-topic sections
 
 ## Tech Stack
 
-- React 18
-- Vite
+- React 19
+- Vite 7
 - Zustand (state management)
-- Tailwind CSS
-- localStorage API
+- Tailwind CSS 4
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js 18+
+- npm
+
+### Install
+
+```bash
+npm install
+```
+
+### Run in Development
+
+```bash
+npm run dev
+```
+
+Open `http://localhost:5173`.
+
+### Build
+
+```bash
+npm run build
+```
+
+### Preview Production Build
+
+```bash
+npm run preview
+```
+
+### Lint
+
+```bash
+npm run lint
+```
+
+## Project Structure
+
+```text
+src/
+  api/            localStorage API layer
+  data/           default seed sheet
+  store/          Zustand store and app actions
+  utils/          parsing, progress, ids, theme classes
+  AddTopicForm.jsx
+  HeaderBar.jsx
+  TopicCard.jsx
+  SubTopicCard.jsx
+  QuestionRow.jsx
+  App.jsx
+```
+
+## Data Model (Simplified)
+
+- Sheet
+  - `topics[]`
+- Topic
+  - `id`, `name`, `order`, `subTopics[]`
+- SubTopic
+  - `id`, `name`, `order`, `questions[]`
+- Question
+  - `id`, `name`, `difficulty`, `link`, `done` (or legacy `status`), `order`
 
 ## Notes
 
-Still working on some features like moving questions between sub-topics and maybe search functionality later.
+- `defaultSheet` seeds initial data on first app load if no saved data exists.
+- Question links are normalized to include `https://` when missing.
 
-Built as an internship assignment.
+Built for the Codolio assignment.
