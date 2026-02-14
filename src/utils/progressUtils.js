@@ -1,22 +1,9 @@
 import { isQuestionDone } from "./questionUtils";
 
-export function getSubTopicProgress(subTopic) {
-  const total = subTopic.questions.length;
-  const done = subTopic.questions.filter(isQuestionDone).length;
-  return { total, done };
-}
-
 export function getTopicProgress(topic) {
-  return topic.subTopics.reduce(
-    (acc, subTopic) => {
-      const { total, done } = getSubTopicProgress(subTopic);
-      return {
-        total: acc.total + total,
-        done: acc.done + done,
-      };
-    },
-    { total: 0, done: 0 }
-  );
+  const total = topic.questions.length;
+  const done = topic.questions.filter(isQuestionDone).length;
+  return { total, done };
 }
 
 export function getSheetProgress(sheet) {

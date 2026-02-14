@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { getSheet, saveSheet } from "../api/sheetApi";
+import { getSheet, saveSheet } from "../utils/sheetApi";
 import { createId } from "../utils/id";
 
 export const useSheetStore = create((set, get) => ({
@@ -30,7 +30,7 @@ export const useSheetStore = create((set, get) => ({
       id: createId("topic"),
       name,
       order: sheet.topics.length,
-      subTopics: [],
+      questions: [],
     };
 
     const updatedSheet = {
@@ -42,19 +42,18 @@ export const useSheetStore = create((set, get) => ({
     await saveSheet(updatedSheet);
   },
 
-  // deletes a topic and reorders the rest
-  // should add a confirmation so user doesn't delete by accident
-  async deleteTopic(topicId) {
-    const { sheet } = get();
+  // // deletes a topic and reorders the rest
+  // async deleteTopic(topicId) {
+  //   const { sheet } = get();
 
-    const topics = sheet.topics
-      .filter((topic) => topic.id !== topicId)
-      .map((topic, index) => ({ ...topic, order: index }));
+  //   const topics = sheet.topics
+  //     .filter((topic) => topic.id !== topicId)
+  //     .map((topic, index) => ({ ...topic, order: index }));
 
-    const updatedSheet = { ...sheet, topics };
-    set({ sheet: updatedSheet });
-    await saveSheet(updatedSheet);
-  },
+  //   const updatedSheet = { ...sheet, topics };
+  //   set({ sheet: updatedSheet });
+  //   await saveSheet(updatedSheet);
+  // },
 
   // to rename a topic
   async renameTopic(topicId, newName) {
@@ -71,78 +70,8 @@ export const useSheetStore = create((set, get) => ({
     await saveSheet(updatedSheet);
   },
 
-  // this creates a subtopic under a specific topic
-  async addSubTopic(topicId, subTopicName) {
-    const name = subTopicName.trim();
-    if (!name) return;
-
-    const { sheet } = get();
-
-    const topics = sheet.topics.map((topic) => {
-      if (topic.id !== topicId) return topic;
-
-      const newSubTopic = {
-        id: createId("subtopic"),
-        name,
-        order: topic.subTopics.length,
-        questions: [],
-      };
-
-      return {
-        ...topic,
-        subTopics: [...topic.subTopics, newSubTopic],
-      };
-    });
-
-    const updatedSheet = { ...sheet, topics };
-    set({ sheet: updatedSheet });
-    await saveSheet(updatedSheet);
-  },
-
-  // rename subtopic
-  async renameSubTopic(topicId, subTopicId, newName) {
-    const name = newName.trim();
-    if (!name) return;
-
-    const { sheet } = get();
-
-    const topics = sheet.topics.map((topic) => {
-      if (topic.id !== topicId) return topic;
-
-      const subTopics = topic.subTopics.map((subTopic) =>
-        subTopic.id === subTopicId ? { ...subTopic, name } : subTopic
-      );
-
-      return { ...topic, subTopics };
-    });
-
-    const updatedSheet = { ...sheet, topics };
-    set({ sheet: updatedSheet });
-    await saveSheet(updatedSheet);
-  },
-
-  // delete a subtopic (also deletes all questions in it)
-  async deleteSubTopic(topicId, subTopicId) {
-    const { sheet } = get();
-
-    const topics = sheet.topics.map((topic) => {
-      if (topic.id !== topicId) return topic;
-
-      const subTopics = topic.subTopics
-        .filter((subTopic) => subTopic.id !== subTopicId)
-        .map((subTopic, index) => ({ ...subTopic, order: index }));
-
-      return { ...topic, subTopics };
-    });
-
-    const updatedSheet = { ...sheet, topics };
-    set({ sheet: updatedSheet });
-    await saveSheet(updatedSheet);
-  },
-
-  // add a question to a subtopic
-  // default is easy for all links added user needs to edit manually for now
-  async addQuestion(topicId, subTopicId, questionInput) {
+  // add a question directly to a topic
+  async addQuestion(topicId, questionInput) {
     const name = questionInput.name?.trim();
     if (!name) return;
 
@@ -156,6 +85,11 @@ export const useSheetStore = create((set, get) => ({
         : "Easy",
       link: questionInput.link?.trim() || "",
       done: Boolean(questionInput.done),
+      platform: questionInput.platform || "Unknown",
+      pattern: questionInput.pattern || [],
+      lastSolvedDate: null,
+      needsReview: false,
+      notes: "",
     };
 
     const { sheet } = get();
@@ -163,21 +97,15 @@ export const useSheetStore = create((set, get) => ({
     const topics = sheet.topics.map((topic) => {
       if (topic.id !== topicId) return topic;
 
-      const subTopics = topic.subTopics.map((subTopic) => {
-        if (subTopic.id !== subTopicId) return subTopic;
+      const newQuestion = {
+        ...question,
+        order: topic.questions.length,
+      };
 
-        const newQuestion = {
-          ...question,
-          order: subTopic.questions.length,
-        };
-
-        return {
-          ...subTopic,
-          questions: [...subTopic.questions, newQuestion],
-        };
-      });
-
-      return { ...topic, subTopics };
+      return {
+        ...topic,
+        questions: [...topic.questions, newQuestion],
+      };
     });
 
     const updatedSheet = { ...sheet, topics };
@@ -185,8 +113,8 @@ export const useSheetStore = create((set, get) => ({
     await saveSheet(updatedSheet);
   },
 
-  // edit question details like name, difficulty and the link
-  async editQuestion(topicId, subTopicId, questionId, updates) {
+  // edit question details
+  async editQuestion(topicId, questionId, updates) {
     const validDifficulties = ["Easy", "Medium", "Hard"];
 
     const { sheet } = get();
@@ -194,29 +122,23 @@ export const useSheetStore = create((set, get) => ({
     const topics = sheet.topics.map((topic) => {
       if (topic.id !== topicId) return topic;
 
-      const subTopics = topic.subTopics.map((subTopic) => {
-        if (subTopic.id !== subTopicId) return subTopic;
+      const questions = topic.questions.map((question) => {
+        if (question.id !== questionId) return question;
 
-        const questions = subTopic.questions.map((question) => {
-          if (question.id !== questionId) return question;
+        const name = updates.name?.trim();
+        if (!name) return question;
 
-          const name = updates.name?.trim();
-          if (!name) return question;
-
-          return {
-            ...question,
-            name,
-            difficulty: validDifficulties.includes(updates.difficulty)
-              ? updates.difficulty
-              : question.difficulty,
-            link: updates.link?.trim() ?? question.link,
-          };
-        });
-
-        return { ...subTopic, questions };
+        return {
+          ...question,
+          name,
+          difficulty: validDifficulties.includes(updates.difficulty)
+            ? updates.difficulty
+            : question.difficulty,
+          link: updates.link?.trim() ?? question.link,
+        };
       });
 
-      return { ...topic, subTopics };
+      return { ...topic, questions };
     });
 
     const updatedSheet = { ...sheet, topics };
@@ -224,37 +146,31 @@ export const useSheetStore = create((set, get) => ({
     await saveSheet(updatedSheet);
   },
 
-  // toggle question complete status
-  async toggleQuestionDone(topicId, subTopicId, questionId, nextDone) {
+  // toggle question complete status and update lastSolvedDate
+  async toggleQuestionDone(topicId, questionId, nextDone) {
     const { sheet } = get();
 
     const topics = sheet.topics.map((topic) => {
       if (topic.id !== topicId) return topic;
 
-      const subTopics = topic.subTopics.map((subTopic) => {
-        if (subTopic.id !== subTopicId) return subTopic;
+      const questions = topic.questions.map((question) => {
+        if (question.id !== questionId) return question;
 
-        const questions = subTopic.questions.map((question) => {
-          if (question.id !== questionId) return question;
+        const currentDone =
+          typeof question.done === "boolean"
+            ? question.done
+            : question.status === "completed";
 
-          const currentDone =
-            typeof question.done === "boolean"
-              ? question.done
-              : question.status === "completed";
+        const willBeDone = typeof nextDone === "boolean" ? nextDone : !currentDone;
 
-          return {
-            ...question,
-            done:
-              typeof nextDone === "boolean"
-                ? nextDone
-                : !currentDone,
-          };
-        });
-
-        return { ...subTopic, questions };
+        return {
+          ...question,
+          done: willBeDone,
+          lastSolvedDate: willBeDone ? new Date().toISOString() : question.lastSolvedDate,
+        };
       });
 
-      return { ...topic, subTopics };
+      return { ...topic, questions };
     });
 
     const updatedSheet = { ...sheet, topics };
@@ -262,24 +178,23 @@ export const useSheetStore = create((set, get) => ({
     await saveSheet(updatedSheet);
   },
 
-  // delete a question
-  async deleteQuestion(topicId, subTopicId, questionId) {
+  // toggle review status
+  async toggleQuestionReview(topicId, questionId, needsReview) {
     const { sheet } = get();
 
     const topics = sheet.topics.map((topic) => {
       if (topic.id !== topicId) return topic;
 
-      const subTopics = topic.subTopics.map((subTopic) => {
-        if (subTopic.id !== subTopicId) return subTopic;
+      const questions = topic.questions.map((question) => {
+        if (question.id !== questionId) return question;
 
-        const questions = subTopic.questions
-          .filter((question) => question.id !== questionId)
-          .map((question, index) => ({ ...question, order: index }));
-
-        return { ...subTopic, questions };
+        return {
+          ...question,
+          needsReview: Boolean(needsReview),
+        };
       });
 
-      return { ...topic, subTopics };
+      return { ...topic, questions };
     });
 
     const updatedSheet = { ...sheet, topics };
@@ -287,4 +202,46 @@ export const useSheetStore = create((set, get) => ({
     await saveSheet(updatedSheet);
   },
 
+  // update question notes
+  async updateQuestionNotes(topicId, questionId, notes) {
+    const { sheet } = get();
+
+    const topics = sheet.topics.map((topic) => {
+      if (topic.id !== topicId) return topic;
+
+      const questions = topic.questions.map((question) => {
+        if (question.id !== questionId) return question;
+
+        return {
+          ...question,
+          notes: notes || "",
+        };
+      });
+
+      return { ...topic, questions };
+    });
+
+    const updatedSheet = { ...sheet, topics };
+    set({ sheet: updatedSheet });
+    await saveSheet(updatedSheet);
+  },
+
+  // // delete a question
+  // async deleteQuestion(topicId, questionId) {
+  //   const { sheet } = get();
+
+  //   const topics = sheet.topics.map((topic) => {
+  //     if (topic.id !== topicId) return topic;
+
+  //     const questions = topic.questions
+  //       .filter((question) => question.id !== questionId)
+  //       .map((question, index) => ({ ...question, order: index }));
+
+  //     return { ...topic, questions };
+  //   });
+
+  //   const updatedSheet = { ...sheet, topics };
+  //   set({ sheet: updatedSheet });
+  //   await saveSheet(updatedSheet);
+  // },
 }));

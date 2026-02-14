@@ -1,60 +1,55 @@
 import { createId } from "./id";
 
 export function transformSheetJsonToAppFormat(sheetJsonData) {
-  if (!sheetJsonData?.data?.questions) {
+  // Handle new format with revision_sheet array
+  if (!sheetJsonData?.revision_sheet || !Array.isArray(sheetJsonData.revision_sheet)) {
     console.warn("Invalid sheet.json format, using empty sheet");
     return { topics: [] };
   }
 
-  const questions = sheetJsonData.data.questions;
+  const questions = sheetJsonData.revision_sheet;
 
+  // Map structure: Topic -> Questions (no subtopics)
   const topicsMap = new Map();
 
   questions.forEach((q) => {
     const topicName = q.topic || "Uncategorized";
-    const subTopicName = q.subTopic || "General";
 
     if (!topicsMap.has(topicName)) {
-      topicsMap.set(topicName, {
-        name: topicName,
-        subTopics: new Map()
-      });
+      topicsMap.set(topicName, []);
     }
 
-    const topic = topicsMap.get(topicName);
-
-    if (!topic.subTopics.has(subTopicName)) {
-      topic.subTopics.set(subTopicName, []);
-    }
-
-    const questionData = q.questionId || {};
-    topic.subTopics.get(subTopicName).push({
+    // Add question directly to topic with new fields
+    topicsMap.get(topicName).push({
       id: createId("question"),
-      name: questionData.name || "Untitled Question",
-      difficulty: questionData.difficulty || "Easy",
-      link: questionData.problemUrl || questionData.link || "",
+      originalId: q.id, // Keep original ID for sorting
+      name: q.name || "Untitled Question",
+      difficulty: q.difficulty || "Easy",
+      link: q.link || "",
       done: false,
-      order: topic.subTopics.get(subTopicName).length,
-      _original: {
-        title: q.title,
-        resource: q.resource
-      }
+      platform: q.platform || "Unknown",
+      pattern: q.pattern || [],
+      lastSolvedDate: null,
+      needsReview: false,
+      notes: "",
     });
   });
 
-  const topics = Array.from(topicsMap.entries()).map(([topicName, topicData], topicIndex) => {
-    const subTopics = Array.from(topicData.subTopics.entries()).map(([subTopicName, questions], subTopicIndex) => ({
-      id: createId("subtopic"),
-      name: subTopicName,
-      order: subTopicIndex,
-      questions: questions
-    }));
+  // Convert map to array and sort questions by original ID
+  const topics = Array.from(topicsMap.entries()).map(([topicName, questions], topicIndex) => {
+    // Sort questions by their original ID to maintain solve order
+    const sortedQuestions = questions
+      .sort((a, b) => (a.originalId || 0) - (b.originalId || 0))
+      .map((q, index) => ({
+        ...q,
+        order: index,
+      }));
 
     return {
       id: createId("topic"),
       name: topicName,
       order: topicIndex,
-      subTopics: subTopics
+      questions: sortedQuestions,
     };
   });
 
