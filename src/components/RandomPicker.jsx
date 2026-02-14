@@ -5,10 +5,20 @@ export default function RandomPicker({
   onQuestionPicked,
 }) {
   const pickRandom = () => {
+    // Check if sheet exists and has topics
+    if (!sheet || !sheet.topics || !Array.isArray(sheet.topics)) {
+      alert("No questions available yet!");
+      return;
+    }
+
     // Get all unsolved questions
     const allUnsolved = [];
 
     sheet.topics.forEach((topic) => {
+      if (!topic.questions || !Array.isArray(topic.questions)) {
+        return;
+      }
+
       topic.questions.forEach((question) => {
         if (!question.done) {
           allUnsolved.push({
