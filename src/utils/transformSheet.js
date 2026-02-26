@@ -1,7 +1,6 @@
 import { createId } from "./id";
 
 export function transformSheetJsonToAppFormat(sheetJsonData) {
-  // Handle new format with revision_sheet array
   if (!sheetJsonData?.revision_sheet || !Array.isArray(sheetJsonData.revision_sheet)) {
     console.warn("Invalid sheet.json format, using empty sheet");
     return { topics: [] };
@@ -9,7 +8,6 @@ export function transformSheetJsonToAppFormat(sheetJsonData) {
 
   const questions = sheetJsonData.revision_sheet;
 
-  // Map structure: Topic -> Questions (no subtopics)
   const topicsMap = new Map();
 
   questions.forEach((q) => {
@@ -19,10 +17,9 @@ export function transformSheetJsonToAppFormat(sheetJsonData) {
       topicsMap.set(topicName, []);
     }
 
-    // Add question directly to topic with new fields
     topicsMap.get(topicName).push({
       id: createId("question"),
-      originalId: q.id, // Keep original ID for sorting
+      originalId: q.id,
       name: q.name || "Untitled Question",
       difficulty: q.difficulty || "Easy",
       link: q.link || "",
@@ -35,9 +32,7 @@ export function transformSheetJsonToAppFormat(sheetJsonData) {
     });
   });
 
-  // Convert map to array and sort questions by original ID
   const topics = Array.from(topicsMap.entries()).map(([topicName, questions], topicIndex) => {
-    // Sort questions by their original ID to maintain solve order
     const sortedQuestions = questions
       .sort((a, b) => (a.originalId || 0) - (b.originalId || 0))
       .map((q, index) => ({

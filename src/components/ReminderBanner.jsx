@@ -1,9 +1,4 @@
-export default function ReminderBanner({
-  reminders,
-  themeClasses,
-  isDark,
-  onQuestionClick,
-}) {
+export default function ReminderBanner({ reminders, isDark, onQuestionClick }) {
   if (reminders.length === 0) return null;
 
   return (

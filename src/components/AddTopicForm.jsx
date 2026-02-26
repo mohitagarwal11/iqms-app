@@ -10,11 +10,11 @@ export default function AddTopicForm({
         <input
           value={topicInput}
           onChange={(e) => onTopicInputChange(e.target.value)}
-          placeholder="Enter topic name (example: Arrays)"
+          placeholder="Enter topic name:"
           className={themeClasses.input}
         />
-        <button type="submit" className={themeClasses.primaryButton}>
-          Add Topic
+        <button type="submit" className={themeClasses.addTopicButton}>
+          Add Topic 
         </button>
       </form>
     </div>

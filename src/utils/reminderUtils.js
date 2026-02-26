@@ -6,8 +6,13 @@ export function getReminders(sheet) {
 
   const reminders = [];
   const now = new Date();
+  // this also needs a revamp!!!
+  // i want to make it work liek this in future
+  // const DAYS_THRESHOLD = [1,7,15,30,60,... and so on];
+  // this is proper revision tech but it is harder to implement for me rn 
+  // needs first time solved storage and stuff
   const DAYS_THRESHOLD = 7;
-
+  
   sheet.topics.forEach(topic => {
     if (!topic.questions || !Array.isArray(topic.questions)) {
       return;

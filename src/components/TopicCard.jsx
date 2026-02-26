@@ -9,12 +9,12 @@ export default function TopicCard({
   isDark,
   onToggleTopic,
   onRenameTopic,
-  // onDeleteTopic,
+  onDeleteTopic,
   onAddQuestion,
   onToggleQuestionDone,
   onToggleQuestionReview,
   onEditQuestion,
-  // onDeleteQuestion,
+  onDeleteQuestion,
   onUpdateNotes,
 }) {
   const topicProgress = getTopicProgress(topic);
@@ -64,7 +64,7 @@ export default function TopicCard({
           Rename
         </button>
 
-        {/* <button
+        <button
           type="button"
           onClick={() => {
             if (
@@ -75,10 +75,10 @@ export default function TopicCard({
               onDeleteTopic(topic.id);
             }
           }}
-          className={themeClasses.dangerButton}
+          className={themeClasses.delTopicButton}
         >
           Delete
-        </button> */}
+        </button>
       </div>
 
       {isOpen && (
@@ -105,9 +105,7 @@ export default function TopicCard({
           </div>
 
           {topic.questions.length === 0 && (
-            <p className={themeClasses.emptyText}>
-              No questions yet. Click "+ Add Question" to get started!
-            </p>
+            <p className={themeClasses.emptyText}>No questions added yet.</p>
           )}
 
           <div className="space-y-2">
@@ -121,7 +119,7 @@ export default function TopicCard({
                 onToggleDone={onToggleQuestionDone}
                 onToggleReview={onToggleQuestionReview}
                 onEditQuestion={onEditQuestion}
-                // onDeleteQuestion={onDeleteQuestion}
+                onDeleteQuestion={onDeleteQuestion}
                 onUpdateNotes={onUpdateNotes}
               />
             ))}

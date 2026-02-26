@@ -1,18 +1,11 @@
-export default function RandomPicker({
-  sheet,
-  themeClasses,
-  isDark,
-  onQuestionPicked,
-}) {
+export default function RandomPicker({ sheet, isDark }) {
   const pickRandom = () => {
-    // Check if sheet exists and has topics
     if (!sheet || !sheet.topics || !Array.isArray(sheet.topics)) {
       alert("No questions available yet!");
       return;
     }
 
-    // Get all unsolved questions
-    const allUnsolved = [];
+    const qns = [];
 
     sheet.topics.forEach((topic) => {
       if (!topic.questions || !Array.isArray(topic.questions)) {
@@ -20,37 +13,16 @@ export default function RandomPicker({
       }
 
       topic.questions.forEach((question) => {
-        if (!question.done) {
-          allUnsolved.push({
-            question,
-            topicId: topic.id,
-            topicName: topic.name,
-          });
-        }
+        qns.push({
+          question,
+          topicId: topic.id,
+          topicName: topic.name,
+        });
       });
     });
 
-    if (allUnsolved.length === 0) {
-      alert("🎉 Congratulations! All questions completed!");
-      return;
-    }
+    const random = qns[Math.floor(Math.random() * qns.length)];
 
-    // Pick random
-    const random = allUnsolved[Math.floor(Math.random() * allUnsolved.length)];
-
-    // Notify parent to scroll to it
-    onQuestionPicked(random.topicId);
-
-    // Show popup
-    alert(
-      `🎲 Random Question:\n\n` +
-        `Topic: ${random.topicName}\n` +
-        `Question: ${random.question.name}\n` +
-        `Difficulty: ${random.question.difficulty}\n\n` +
-        `Good luck! 🚀`,
-    );
-
-    // Open link if available
     if (random.question.link) {
       window.open(random.question.link, "_blank");
     }
@@ -62,11 +34,11 @@ export default function RandomPicker({
       onClick={pickRandom}
       className={
         isDark
-          ? "rounded-lg border border-emerald-500/50 bg-emerald-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-emerald-500"
-          : "rounded-lg border border-emerald-600 bg-emerald-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-emerald-700"
+          ? "rounded-lg border border-emerald-400/30 bg-emerald-500/20 px-4 py-2 text-sm font-medium text-emerald-300 transition hover:bg-emerald-500/30"
+          : "rounded-lg border border-emerald-300 bg-emerald-100 px-4 py-2 text-sm font-medium text-emerald-700 transition hover:bg-emerald-200"
       }
     >
-      🎲 Random Question
+      Random Question
     </button>
   );
 }

@@ -42,18 +42,18 @@ export const useSheetStore = create((set, get) => ({
     await saveSheet(updatedSheet);
   },
 
-  // // deletes a topic and reorders the rest
-  // async deleteTopic(topicId) {
-  //   const { sheet } = get();
+  // deletes a topic and reorders the rest
+  async deleteTopic(topicId) {
+    const { sheet } = get();
 
-  //   const topics = sheet.topics
-  //     .filter((topic) => topic.id !== topicId)
-  //     .map((topic, index) => ({ ...topic, order: index }));
+    const topics = sheet.topics
+      .filter((topic) => topic.id !== topicId)
+      .map((topic, index) => ({ ...topic, order: index }));
 
-  //   const updatedSheet = { ...sheet, topics };
-  //   set({ sheet: updatedSheet });
-  //   await saveSheet(updatedSheet);
-  // },
+    const updatedSheet = { ...sheet, topics };
+    set({ sheet: updatedSheet });
+    await saveSheet(updatedSheet);
+  },
 
   // to rename a topic
   async renameTopic(topicId, newName) {
@@ -82,10 +82,10 @@ export const useSheetStore = create((set, get) => ({
       name,
       difficulty: validDifficulties.includes(questionInput.difficulty)
         ? questionInput.difficulty
-        : "Easy",
+        : "--",
       link: questionInput.link?.trim() || "",
       done: Boolean(questionInput.done),
-      platform: questionInput.platform || "Unknown",
+      platform: questionInput.platform || "--",
       pattern: questionInput.pattern || [],
       lastSolvedDate: null,
       needsReview: false,
@@ -226,22 +226,22 @@ export const useSheetStore = create((set, get) => ({
     await saveSheet(updatedSheet);
   },
 
-  // // delete a question
-  // async deleteQuestion(topicId, questionId) {
-  //   const { sheet } = get();
+  // delete a question
+  async deleteQuestion(topicId, questionId) {
+    const { sheet } = get();
 
-  //   const topics = sheet.topics.map((topic) => {
-  //     if (topic.id !== topicId) return topic;
+    const topics = sheet.topics.map((topic) => {
+      if (topic.id !== topicId) return topic;
 
-  //     const questions = topic.questions
-  //       .filter((question) => question.id !== questionId)
-  //       .map((question, index) => ({ ...question, order: index }));
+      const questions = topic.questions
+        .filter((question) => question.id !== questionId)
+        .map((question, index) => ({ ...question, order: index }));
 
-  //     return { ...topic, questions };
-  //   });
+      return { ...topic, questions };
+    });
 
-  //   const updatedSheet = { ...sheet, topics };
-  //   set({ sheet: updatedSheet });
-  //   await saveSheet(updatedSheet);
-  // },
+    const updatedSheet = { ...sheet, topics };
+    set({ sheet: updatedSheet });
+    await saveSheet(updatedSheet);
+  },
 }));

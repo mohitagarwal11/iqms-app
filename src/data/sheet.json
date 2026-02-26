@@ -4,154 +4,298 @@
       "id": 1,
       "name": "Two Sum",
       "platform": "LeetCode",
-      "topic": "Array",
+      "topic": "Searching & Lookup",
       "difficulty": "Easy",
-      "pattern": ["HashMap"],
+      "pattern": ["Lookup HashMap"],
       "link": "https://leetcode.com/problems/two-sum/"
     },
     {
       "id": 2,
+      "name": "Valid Anagram",
+      "platform": "LeetCode",
+      "topic": "Strings & Text Processing",
+      "difficulty": "Easy",
+      "pattern": ["Frequency Counting"],
+      "link": "https://leetcode.com/problems/valid-anagram/"
+    },
+    {
+      "id": 3,
       "name": "Contains Duplicate",
       "platform": "LeetCode",
-      "topic": "Array",
+      "topic": "Searching & Lookup",
       "difficulty": "Easy",
       "pattern": ["HashSet"],
       "link": "https://leetcode.com/problems/contains-duplicate/"
     },
     {
-      "id": 3,
-      "name": "Valid Anagram",
-      "platform": "LeetCode",
-      "topic": "String",
-      "difficulty": "Easy",
-      "pattern": ["Frequency Map"],
-      "link": "https://leetcode.com/problems/valid-anagram/"
-    },
-    {
       "id": 4,
-      "name": "Majority Element",
-      "platform": "LeetCode",
-      "topic": "Array",
-      "difficulty": "Easy",
-      "pattern": ["HashMap", "Boyer-Moore"],
-      "link": "https://leetcode.com/problems/majority-element/"
-    },
-    {
-      "id": 5,
-      "name": "Missing Number",
-      "platform": "LeetCode",
-      "topic": "Array",
-      "difficulty": "Easy",
-      "pattern": ["Math", "XOR"],
-      "link": "https://leetcode.com/problems/missing-number/"
-    },
-    {
-      "id": 6,
       "name": "Move Zeroes",
       "platform": "LeetCode",
-      "topic": "Array",
+      "topic": "Arrays & Sequence Processing",
       "difficulty": "Easy",
-      "pattern": ["Two Pointers"],
+      "pattern": ["Two Pointer Compaction"],
       "link": "https://leetcode.com/problems/move-zeroes/"
     },
     {
-      "id": 7,
-      "name": "Remove Duplicates from Sorted Array",
-      "platform": "LeetCode",
-      "topic": "Array",
-      "difficulty": "Easy",
-      "pattern": ["Two Pointers"],
-      "link": "https://leetcode.com/problems/remove-duplicates-from-sorted-array/"
-    },
-    {
-      "id": 8,
-      "name": "Valid Palindrome",
-      "platform": "LeetCode",
-      "topic": "String",
-      "difficulty": "Easy",
-      "pattern": ["Two Pointers"],
-      "link": "https://leetcode.com/problems/valid-palindrome/"
-    },
-    {
-      "id": 9,
+      "id": 5,
       "name": "Two Sum II",
       "platform": "LeetCode",
-      "topic": "Array",
+      "topic": "Pairing & Combination",
       "difficulty": "Medium",
-      "pattern": ["Two Pointers"],
+      "pattern": ["Sorted Two Pointers"],
       "link": "https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/"
     },
     {
-      "id": 10,
+      "id": 6,
       "name": "Container With Most Water",
       "platform": "LeetCode",
-      "topic": "Array",
+      "topic": "Pairing & Combination",
       "difficulty": "Medium",
-      "pattern": ["Two Pointers", "Greedy"],
+      "pattern": ["Opposite Pointer Greedy"],
       "link": "https://leetcode.com/problems/container-with-most-water/"
     },
     {
-      "id": 11,
+      "id": 7,
       "name": "3Sum",
       "platform": "LeetCode",
-      "topic": "Array",
+      "topic": "Pairing & Combination",
       "difficulty": "Medium",
-      "pattern": ["Sorting", "Two Pointers"],
+      "pattern": ["Sorting + Two Pointers"],
       "link": "https://leetcode.com/problems/3sum/"
     },
     {
-      "id": 12,
+      "id": 8,
+      "name": "Best Time to Buy and Sell Stock",
+      "platform": "LeetCode",
+      "topic": "Arrays & Sequence Processing",
+      "difficulty": "Easy",
+      "pattern": ["Prefix Minimum Greedy"],
+      "link": "https://leetcode.com/problems/best-time-to-buy-and-sell-stock/"
+    },
+    {
+      "id": 9,
       "name": "Maximum Subarray",
       "platform": "LeetCode",
-      "topic": "Array",
+      "topic": "Subarray / Substring Behaviour",
       "difficulty": "Medium",
-      "pattern": ["Kadane", "Prefix"],
+      "pattern": ["Kadane"],
       "link": "https://leetcode.com/problems/maximum-subarray/"
     },
     {
-      "id": 13,
+      "id": 10,
       "name": "Subarray Sum Equals K",
       "platform": "LeetCode",
-      "topic": "Array",
+      "topic": "Subarray / Substring Behaviour",
       "difficulty": "Medium",
-      "pattern": ["Prefix Sum", "HashMap"],
+      "pattern": ["Prefix + HashMap"],
       "link": "https://leetcode.com/problems/subarray-sum-equals-k/"
     },
     {
-      "id": 14,
+      "id": 11,
       "name": "Longest Substring Without Repeating Characters",
       "platform": "LeetCode",
-      "topic": "String",
+      "topic": "Subarray / Substring Behaviour",
       "difficulty": "Medium",
-      "pattern": ["Sliding Window", "HashMap"],
+      "pattern": ["Variable Sliding Window"],
       "link": "https://leetcode.com/problems/longest-substring-without-repeating-characters/"
     },
     {
-      "id": 15,
+      "id": 12,
+      "name": "Find All Anagrams in a String",
+      "platform": "LeetCode",
+      "topic": "Subarray / Substring Behaviour",
+      "difficulty": "Medium",
+      "pattern": ["Window Frequency"],
+      "link": "https://leetcode.com/problems/find-all-anagrams-in-a-string/"
+    },
+    {
+      "id": 13,
       "name": "Minimum Window Substring",
       "platform": "LeetCode",
-      "topic": "String",
+      "topic": "Subarray / Substring Behaviour",
       "difficulty": "Hard",
-      "pattern": ["Sliding Window", "Frequency Map"],
+      "pattern": ["Advanced Window Control"],
       "link": "https://leetcode.com/problems/minimum-window-substring/"
     },
     {
+      "id": 14,
+      "name": "Isomorphic Strings",
+      "platform": "LeetCode",
+      "topic": "Strings & Text Processing",
+      "difficulty": "Easy",
+      "pattern": ["Bi-directional Mapping"],
+      "link": "https://leetcode.com/problems/isomorphic-strings/"
+    },
+    {
+      "id": 15,
+      "name": "Group Anagrams",
+      "platform": "LeetCode",
+      "topic": "Searching & Lookup",
+      "difficulty": "Medium",
+      "pattern": ["Grouping Hash"],
+      "link": "https://leetcode.com/problems/group-anagrams/"
+    },
+    {
       "id": 16,
-      "name": "1843B - Long Long",
-      "platform": "Codeforces",
-      "topic": "Array",
-      "difficulty": "1200",
-      "pattern": ["Two Pointers", "Greedy"],
-      "link": "https://codeforces.com/problemset/problem/1843/B"
+      "name": "Top K Frequent Elements",
+      "platform": "LeetCode",
+      "topic": "Searching & Lookup",
+      "difficulty": "Medium",
+      "pattern": ["Frequency + Heap"],
+      "link": "https://leetcode.com/problems/top-k-frequent-elements/"
     },
     {
       "id": 17,
-      "name": "1968B - Prefiquence",
+      "name": "Product of Array Except Self",
+      "platform": "LeetCode",
+      "topic": "Arrays & Sequence Processing",
+      "difficulty": "Medium",
+      "pattern": ["Prefix Suffix"],
+      "link": "https://leetcode.com/problems/product-of-array-except-self/"
+    },
+    {
+      "id": 18,
+      "name": "Prefiquence",
       "platform": "Codeforces",
-      "topic": "String",
+      "topic": "Strings & Text Processing",
       "difficulty": "900",
-      "pattern": ["Two Pointers"],
+      "pattern": ["Subsequence Two Pointers"],
       "link": "https://codeforces.com/problemset/problem/1968/B"
+    },
+    {
+      "id": 19,
+      "name": "Anton and Letters",
+      "platform": "Codeforces",
+      "topic": "Searching & Lookup",
+      "difficulty": "800",
+      "pattern": ["Set Counting"],
+      "link": "https://codeforces.com/problemset/problem/443/A"
+    },
+    {
+      "id": 20,
+      "name": "Remove Nth Node From End of List",
+      "platform": "LeetCode",
+      "topic": "Linked Structure Manipulation",
+      "difficulty": "Medium",
+      "pattern": ["Fast Slow Pointers"],
+      "link": "https://leetcode.com/problems/remove-nth-node-from-end-of-list/"
+    },
+    {
+      "id": 21,
+      "name": "Reverse Linked List",
+      "platform": "LeetCode",
+      "topic": "Linked Structure Manipulation",
+      "difficulty": "Easy",
+      "pattern": ["Pointer Reversal"],
+      "link": "https://leetcode.com/problems/reverse-linked-list/"
+    },
+    {
+      "id": 22,
+      "name": "Linked List Cycle",
+      "platform": "LeetCode",
+      "topic": "Linked Structure Manipulation",
+      "difficulty": "Easy",
+      "pattern": ["Floyd Cycle Detection"],
+      "link": "https://leetcode.com/problems/linked-list-cycle/"
+    },
+    {
+      "id": 23,
+      "name": "Merge Two Sorted Lists",
+      "platform": "LeetCode",
+      "topic": "Linked Structure Manipulation",
+      "difficulty": "Easy",
+      "pattern": ["Two Pointer Merge"],
+      "link": "https://leetcode.com/problems/merge-two-sorted-lists/"
+    },
+    {
+      "id": 24,
+      "name": "Middle of the Linked List",
+      "platform": "LeetCode",
+      "topic": "Linked Structure Manipulation",
+      "difficulty": "Easy",
+      "pattern": ["Fast Slow Pointers"],
+      "link": "https://leetcode.com/problems/middle-of-the-linked-list/"
+    },
+    {
+      "id": 25,
+      "name": "Palindrome Linked List",
+      "platform": "LeetCode",
+      "topic": "Linked Structure Manipulation",
+      "difficulty": "Easy",
+      "pattern": ["Reverse Half"],
+      "link": "https://leetcode.com/problems/palindrome-linked-list/"
+    },
+    {
+      "id": 26,
+      "name": "Longest Repeating Character Replacement",
+      "platform": "LeetCode",
+      "topic": "Subarray / Substring Behaviour",
+      "difficulty": "Medium",
+      "pattern": ["Variable Sliding Window"],
+      "link": "https://leetcode.com/problems/longest-repeating-character-replacement/"
+    },
+    {
+      "id": 27,
+      "name": "Maximum Average Subarray I",
+      "platform": "LeetCode",
+      "topic": "Subarray / Substring Behaviour",
+      "difficulty": "Easy",
+      "pattern": ["Fixed Sliding Window"],
+      "link": "https://leetcode.com/problems/maximum-average-subarray-i/"
+    },
+    {
+      "id": 28,
+      "name": "Longest Subarray of 1s After Deleting One Element",
+      "platform": "LeetCode",
+      "topic": "Subarray / Substring Behaviour",
+      "difficulty": "Medium",
+      "pattern": ["Window Constraint"],
+      "link": "https://leetcode.com/problems/longest-subarray-of-1s-after-deleting-one-element/"
+    },
+    {
+      "id": 29,
+      "name": "Valid Triangle Number",
+      "platform": "LeetCode",
+      "topic": "Pairing & Combination",
+      "difficulty": "Medium",
+      "pattern": ["Sorted Two Pointers"],
+      "link": "https://leetcode.com/problems/valid-triangle-number/"
+    },
+    {
+      "id": 30,
+      "name": "Boats to Save People",
+      "platform": "LeetCode",
+      "topic": "Pairing & Combination",
+      "difficulty": "Medium",
+      "pattern": ["Greedy Pairing"],
+      "link": "https://leetcode.com/problems/boats-to-save-people/"
+    },
+    {
+      "id": 31,
+      "name": "Partition Labels",
+      "platform": "LeetCode",
+      "topic": "Strings & Text Processing",
+      "difficulty": "Medium",
+      "pattern": ["Greedy Window"],
+      "link": "https://leetcode.com/problems/partition-labels/"
+    },
+    {
+      "id": 32,
+      "name": "Queue at the School",
+      "platform": "Codeforces",
+      "topic": "Simulation & Implementation",
+      "difficulty": "800",
+      "pattern": ["Simulation"],
+      "link": "https://codeforces.com/problemset/problem/266/B"
+    },
+    {
+      "id": 33,
+      "name": "Sereja and Dima",
+      "platform": "Codeforces",
+      "topic": "Simulation & Implementation",
+      "difficulty": "900",
+      "pattern": ["Deque Greedy"],
+      "link": "https://codeforces.com/problemset/problem/381/A"
     }
   ]
 }

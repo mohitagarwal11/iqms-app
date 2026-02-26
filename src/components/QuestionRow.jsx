@@ -10,7 +10,7 @@ export default function QuestionRow({
   onToggleDone,
   onToggleReview,
   onEditQuestion,
-  // onDeleteQuestion,
+  onDeleteQuestion,
   onUpdateNotes,
 }) {
   const [showPatterns, setShowPatterns] = useState(false);
@@ -54,22 +54,6 @@ export default function QuestionRow({
           {question.name}
         </span>
 
-        {question.needsReview && (
-          <span
-            className={
-              isDark
-                ? "rounded-full bg-yellow-500/20 px-2 py-1 text-[10px] font-bold text-yellow-300"
-                : "rounded-full bg-yellow-100 px-2 py-1 text-[10px] font-bold text-yellow-700"
-            }
-          >
-            ⭐ REVIEW
-          </span>
-        )}
-
-        <span className={getDifficultyClass(question.difficulty, isDark)}>
-          {question.difficulty}
-        </span>
-
         {question.link ? (
           <a
             href={question.link}
@@ -77,23 +61,40 @@ export default function QuestionRow({
             rel="noreferrer"
             className={
               isDark
-                ? "rounded-full bg-violet-500/20 px-2 py-1 text-[11px] font-semibold text-violet-300 hover:bg-violet-500/30 transition"
-                : "rounded-full bg-violet-100 px-2 py-1 text-[11px] font-semibold text-violet-700 hover:bg-violet-200 transition"
+                ? "rounded-full bg-violet-500/20 px-2 py-1 text-[13px] font-semibold text-violet-300 hover:bg-violet-500/30 transition"
+                : "rounded-full bg-violet-100 px-2 py-1 text-[13px] font-semibold text-violet-700 hover:bg-violet-200 transition"
             }
           >
             {question.platform}
+            <span className="text-[12px] opacity-70"> ↗</span>
           </a>
         ) : (
           <span
             className={
               isDark
-                ? "rounded-full bg-slate-700 px-2 py-1 text-[11px] font-semibold text-slate-400"
-                : "rounded-full bg-slate-200 px-2 py-1 text-[11px] font-semibold text-slate-500"
+                ? "rounded-full bg-slate-700 px-2 py-1 text-[13px] font-semibold text-slate-400"
+                : "rounded-full bg-slate-200 px-2 py-1 text-[13px] font-semibold text-slate-500"
             }
           >
             {question.platform}
           </span>
         )}
+
+        {question.needsReview && (
+          <span
+            className={
+              isDark
+                ? "rounded-full bg-yellow-500/20 px-2 py-1 text-[12px] font-bold text-yellow-300"
+                : "rounded-full bg-yellow-100 px-2 py-1 text-[12px] font-bold text-yellow-700"
+            }
+          >
+            REVIEW
+          </span>
+        )}
+
+        <span className={getDifficultyClass(question.difficulty, isDark)}>
+          {question.difficulty}
+        </span>
 
         {question.pattern && question.pattern.length > 0 && (
           <button
@@ -152,17 +153,17 @@ export default function QuestionRow({
           Edit
         </button>
 
-        {/* <button
+        <button
           type="button"
           onClick={() => {
             if (window.confirm(`Delete "${question.name}"?`)) {
               onDeleteQuestion(topicId, question.id);
             }
           }}
-          className={themeClasses.dangerTinyButton}
+          className={themeClasses.delQuestionButton}
         >
           Del
-        </button> */}
+        </button>
       </div>
 
       {/* Last solved info */}

@@ -15,10 +15,10 @@ export default function App() {
   const [topicInput, setTopicInput] = useState("");
   const [openTopicIds, setOpenTopicIds] = useState([]);
   const [theme, setTheme] = useState(() => {
-    if (typeof window === "undefined") return "light";
-    return window.localStorage.getItem(THEME_STORAGE_KEY) === "dark"
-      ? "dark"
-      : "light";
+    if (typeof window === "undefined") return "dark";
+
+    const saved = window.localStorage.getItem(THEME_STORAGE_KEY);
+    return saved ? saved : "dark";
   });
 
   const isDark = theme === "dark";
@@ -30,11 +30,11 @@ export default function App() {
     error,
     loadSheet,
     addTopic,
-    // deleteTopic,
+    deleteTopic,
     renameTopic,
     addQuestion,
     editQuestion,
-    // deleteQuestion,
+    deleteQuestion,
     toggleQuestionDone,
     toggleQuestionReview,
     updateQuestionNotes,
@@ -68,24 +68,6 @@ export default function App() {
     });
   }
 
-  function handleQuestionPicked(topicId) {
-    // Open the topic if not already open
-    setOpenTopicIds((prev) => {
-      if (!prev.includes(topicId)) {
-        return [...prev, topicId];
-      }
-      return prev;
-    });
-
-    // Scroll to topic after a brief delay
-    setTimeout(() => {
-      const element = document.getElementById(`topic-${topicId}`);
-      if (element) {
-        element.scrollIntoView({ behavior: "smooth", block: "center" });
-      }
-    }, 100);
-  }
-
   const overallProgress = getSheetProgress(sheet);
   const reminders = getReminders(sheet);
 
@@ -114,7 +96,6 @@ export default function App() {
             sheet={sheet}
             themeClasses={themeClasses}
             isDark={isDark}
-            onQuestionPicked={handleQuestionPicked}
           />
         </div>
 
@@ -122,7 +103,6 @@ export default function App() {
           reminders={reminders}
           themeClasses={themeClasses}
           isDark={isDark}
-          onQuestionClick={handleQuestionPicked}
         />
 
         {loading && <p className="mt-4">Loading...</p>}
@@ -130,9 +110,7 @@ export default function App() {
 
         <section className={themeClasses.topicsSection}>
           {sheet.topics.length === 0 && (
-            <div className={themeClasses.emptyState}>
-              No topics yet. Add your first topic above to get started.
-            </div>
+            <div className={themeClasses.emptyState}>No topics yet.</div>
           )}
 
           {sheet.topics.map((topic) => (
@@ -144,12 +122,12 @@ export default function App() {
               isDark={isDark}
               onToggleTopic={toggleTopic}
               onRenameTopic={renameTopic}
-              // onDeleteTopic={deleteTopic}
+              onDeleteTopic={deleteTopic}
               onAddQuestion={addQuestion}
               onToggleQuestionDone={toggleQuestionDone}
               onToggleQuestionReview={toggleQuestionReview}
               onEditQuestion={editQuestion}
-              // onDeleteQuestion={deleteQuestion}
+              onDeleteQuestion={deleteQuestion}
               onUpdateNotes={updateQuestionNotes}
             />
           ))}
