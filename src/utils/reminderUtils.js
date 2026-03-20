@@ -1,23 +1,18 @@
-// Get questions that need practice (not solved in 7+ days or marked for review)
-export function getReminders(sheet) {
-  if (!sheet || !sheet.topics || !Array.isArray(sheet.topics)) {
-    return [];
-  }
 
+export function getReminders(sheet) {
   const reminders = [];
   const now = new Date();
   // this also needs a revamp!!!
-  // i want to make it work liek this in future
+  // i want to make it work like this in future
   // const DAYS_THRESHOLD = [1,7,15,30,60,... and so on];
   // this is proper revision tech but it is harder to implement for me rn 
   // needs first time solved storage and stuff
   const DAYS_THRESHOLD = 7;
-  
+
   sheet.topics.forEach(topic => {
     if (!topic.questions || !Array.isArray(topic.questions)) {
       return;
     }
-
     topic.questions.forEach(question => {
       let reason = null;
 

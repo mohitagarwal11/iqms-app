@@ -14,7 +14,7 @@ export default function AddTopicForm({
           className={themeClasses.input}
         />
         <button type="submit" className={themeClasses.addTopicButton}>
-          Add Topic 
+          Add Topic
         </button>
       </form>
     </div>

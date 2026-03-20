@@ -10,10 +10,6 @@ export function getTopicProgress(topic) {
 }
 
 export function getSheetProgress(sheet) {
-  if (!sheet || !sheet.topics || !Array.isArray(sheet.topics)) {
-    return { total: 0, done: 0 };
-  }
-
   return sheet.topics.reduce(
     (acc, topic) => {
       const { total, done } = getTopicProgress(topic);
@@ -24,9 +20,4 @@ export function getSheetProgress(sheet) {
     },
     { total: 0, done: 0 }
   );
-}
-
-export function getProgressPercent(done, total) {
-  if (total === 0) return 0;
-  return Math.round((done / total) * 100);
 }

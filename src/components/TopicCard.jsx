@@ -1,4 +1,4 @@
-import { getProgressPercent, getTopicProgress } from "../utils/progressUtils";
+import { getTopicProgress } from "../utils/progressUtils";
 import QuestionRow from "./QuestionRow";
 import { makeQuestionFromLink } from "../utils/questionUtils";
 
@@ -18,9 +18,8 @@ export default function TopicCard({
   onUpdateNotes,
 }) {
   const topicProgress = getTopicProgress(topic);
-  const topicPercent = getProgressPercent(
-    topicProgress.done,
-    topicProgress.total,
+  const topicPercent = Math.round(
+    (topicProgress.done / topicProgress.total) * 100,
   );
 
   return (

@@ -1,12 +1,56 @@
-import { transformSheetJsonToAppFormat } from "../utils/transformSheet";
 import sheetJsonData from "../data/sheet.json";
+import { createId } from "./id";
 
-const STORAGE_KEY = "iqms-sheet-v1";
+const STORAGE_KEY = "default-sheet";
 
 // to add a small delay to simulate network request
 const wait = (ms = 150) => new Promise((resolve) => setTimeout(resolve, ms));
 
 // Transform sheet.json into the app's internal format on first load
+function transformSheetJsonToAppFormat(sheetJsonData) {
+  const questions = sheetJsonData.revision_sheet;
+  const topicsMap = new Map();
+
+  questions.forEach((q) => {
+    const topicName = q.topic;
+
+    if (!topicsMap.has(topicName)) {
+      topicsMap.set(topicName, []);
+    }
+
+    topicsMap.get(topicName).push({
+      id: createId("question"),
+      originalId: q.id,
+      name: q.name || "Untitled Question",
+      difficulty: q.difficulty || "Easy",
+      link: q.link || "",
+      done: false,
+      platform: q.platform || "Unknown",
+      pattern: q.pattern || [],
+      lastSolvedDate: null,
+      needsReview: false,
+      notes: "",
+    });
+  });
+
+  const topics = Array.from(topicsMap.entries()).map(([topicName, questions], topicIndex) => {
+    const sortedQuestions = questions
+      .sort((a, b) => (a.originalId || 0) - (b.originalId || 0))
+      .map((q, index) => ({
+        ...q,
+        order: index,
+      }));
+
+    return {
+      id: createId("topic"),
+      name: topicName,
+      order: topicIndex,
+      questions: sortedQuestions,
+    };
+  });
+
+  return { topics };
+}
 const initialSheet = transformSheetJsonToAppFormat(sheetJsonData);
 
 // get sheet from localStorage
@@ -20,7 +64,7 @@ export async function getSheet() {
     return JSON.parse(saved);
   }
 
-  console.log("loaded initial sheet from sheet.json");
+  console.log("loaded default sheet");
   localStorage.setItem(STORAGE_KEY, JSON.stringify(initialSheet));
   return initialSheet;
 }

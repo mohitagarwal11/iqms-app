@@ -17,7 +17,7 @@ export function detectPlatform(url) {
   return '--';
 }
 
-export function parseQuestionName(url, platform) {
+export function detectQuestionName(url, platform) {
   const parts = url.pathname.split("/").filter(Boolean);
 
   try {
@@ -73,7 +73,7 @@ export function parseQuestionName(url, platform) {
 
     return "Untitled Question";
   } catch (error) {
-    console.error("Error parsing question name:", error);
+    // console.error("Error parsing question name:", error);
     return "Untitled Question";
   }
 }
@@ -89,15 +89,9 @@ export function makeQuestionFromLink(rawLink) {
 
   try {
     const url = new URL(normalizedLink);
-
     const platform = detectPlatform(url);
-
-    const questionName = parseQuestionName(url, platform);
-
+    const questionName = detectQuestionName(url, platform);
     let defaultDifficulty = "--";
-    if (platform === 'Codeforces') {
-      defaultDifficulty = "--";
-    }
 
     return {
       name: questionName,
